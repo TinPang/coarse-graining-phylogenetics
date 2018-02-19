@@ -13,7 +13,7 @@ use CGP_lib qw/f_print_fasta f_parse_fasta f_print_phy/;
 # input command
 # 	perl scrip_CGP_main.pl numberOfSitesPerSegment listOfGenomeID.txt alignmentCoreGene1.fasta alignmentCoreGene2.fasta ...
 # the genes in each fasta file must of the same of genomeID
-my ($NsitePerSegment,$outputPHYfile,$file_genome_names,@coreGeneFasta) = @ARGV;
+my ($NsitePerSegment,$outputFASTAfile,$file_genome_names,@coreGeneFasta) = @ARGV;
 
 
 
@@ -85,14 +85,6 @@ for my $fasta_file (@coreGeneFasta) {
 
 
 
-# print the concatenated genomes in a phylip file
-f_print_phy($outputPHYfile,\@genomes,\@superGene_seq);
-my $outputFASTAfile;
-if ($outputPHYfile=~/^(.*)\.phy/) {
-	$outputFASTAfile = $1.".fasta";
-} else {
-	$outputFASTAfile = $outputPHYfile.".fasta";
-}
 f_print_fasta($outputFASTAfile,\@genomes,\@superGene_seq);
 
 

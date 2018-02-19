@@ -50,13 +50,13 @@ for my $option (@ARGV) {
 
 
 
-my $filename_supergene_phylip = $outputFileName.'_trimmedSupergene.phy';
+my $filename_supergene_fasta = $outputFileName.'_trimmedSupergene.fasta';
 
 # trim core gene fasta files, and concatenate the core gene sequences of a genome into a 'supergene', and write the supergene of each strain into a phylip file
 print STDERR "trim the sequences and save them in a file\n\n";
 if ($file_genome_names) {	
 	my $core_gene_file_txt = join(' ',@coreGeneFastaFiles);
-	system("perl $dir\/script_CGP1_concatenateCoreGenes.pl $segmentLength $filename_supergene_phylip $file_genome_names $core_gene_file_txt");
+	system("perl $dir\/script_CGP1_concatenateCoreGenes.pl $segmentLength $filename_supergene_fasta $file_genome_names $core_gene_file_txt");
 } else {
 	# when genomes names are not given, then simply use the name from the first fasta file
 	my ($hash_genename2seq,$arr_genenames) = f_parse_fasta($coreGeneFastaFiles[0]);	
@@ -68,8 +68,8 @@ if ($file_genome_names) {
 	close FOUT;
 		
 	my $core_gene_file_txt = join(' ',@coreGeneFastaFiles);
-	system("perl $dir\/script_CGP1_concatenateCoreGenes.pl $segmentLength $filename_supergene_phylip $tmpfile $core_gene_file_txt");
-	
+	system("perl $dir\/script_CGP1_concatenateCoreGenes.pl $segmentLength $filename_supergene_fasta $tmpfile $core_gene_file_txt");
+
 	unlink $tmpfile;
 }
 
@@ -80,8 +80,8 @@ if ($file_genome_names) {
 print STDERR "extract the SSP distribution of all the sequence pairs\n\n";
 my $filename_strain_pairs = $outputFileName.'_pairName.dat';
 my $filename_SSP_each_segment = $outputFileName.'_pairSSP.dat';
-system("perl $dir\/script_CGP2_phylip2sspDistribution.pl $segmentLength $filename_supergene_phylip > $filename_strain_pairs 2> $filename_SSP_each_segment");
-unlink $filename_supergene_phylip;
+system("perl $dir\/script_CGP2_fasta2sspDistribution.pl $segmentLength $filename_supergene_fasta > $filename_strain_pairs 2> $filename_SSP_each_segment");
+unlink $filename_supergene_fasta;
 
 # perform the Monte Carlo simlation
 print STDERR "perform Monte Carlo simlation\n";
