@@ -93,7 +93,8 @@ my $endPairDiv = 1.3*$maxDelta;
 my ($fout_tree,$fout_score);
 open $fout_tree,">".$outputFileHeader.".record_tree" or die "can't write file $outputFileHeader\.record_tree\n";
 open $fout_score,">".$outputFileHeader.".record_score" or die "can't write file record_score\n";
-evo_mcmc5($arr_data_SNP_dist,$minMCMCstep,$NMCstep_interval,$mu,$rho,$theta,$deltaTE,$endPairDiv,$dt,$maxNSNP,$initial_distance_matrix,$arr_strain,$arr_strainPair,$mcmcTemperature,time(),0,$hash_strainPair2SNPdist,$mutateTreeTopology,$fout_tree,$fout_score);
+my $bestTree_filename = $outputFileHeader.".record_bestTree";
+evo_mcmc5($arr_data_SNP_dist,$minMCMCstep,$NMCstep_interval,$mu,$rho,$theta,$deltaTE,$endPairDiv,$dt,$maxNSNP,$initial_distance_matrix,$arr_strain,$arr_strainPair,$mcmcTemperature,time(),0,$hash_strainPair2SNPdist,$mutateTreeTopology,$fout_tree,$fout_score,$bestTree_filename);
 
 
 exit 1;
@@ -113,7 +114,7 @@ exit 1;
 
 
 sub evo_mcmc5 {
-	my ($arr_data_SNP_dist,$minMCMCstep,$NMCstep_interval,$mu,$rho,$theta,$deltaTE,$endPairDiv,$dt,$matrixSize,$start_dist_matrix_hash_input,$arr_strains,$arrLine2StrainPairs,$MCtemperature,$curtime,$step0,$hash_strainPair2SNPdist,$mutateTreeTopology,$fout_tree,$fout_score) = @_;
+	my ($arr_data_SNP_dist,$minMCMCstep,$NMCstep_interval,$mu,$rho,$theta,$deltaTE,$endPairDiv,$dt,$matrixSize,$start_dist_matrix_hash_input,$arr_strains,$arrLine2StrainPairs,$MCtemperature,$curtime,$step0,$hash_strainPair2SNPdist,$mutateTreeTopology,$fout_tree,$fout_score,$bestTree_filename) = @_;
 	my ($maxx_score,$maxx_score_step) = (-1e100,0);
 	my ($sav_score,$sav_score_step) = (-1e100,0);
 	my $step_to_stop = $minMCMCstep;
@@ -560,6 +561,11 @@ print "$maxxTree;\n";
 	print $fout_tree "$maxxTree;\n";
 	$fout_score->autoflush;
 	$fout_tree->autoflush;
+	
+	open FOUT,">$bestTree_filename" or die "can't write to $bestTree_filename\n";
+	print FOUT "step=$printstep\tlikelihood=$maxx_score\tmu=$maxxPara[0]\trho=$maxxPara[1]\ttheta=$maxxPara[2]\tdeltaTE=$maxxPara[3]\tdt=$dt\n";
+	print FOUT "$maxxTree;\n";
+	close FOUT;
 }
 
 

@@ -85,4 +85,5 @@ unlink $filename_supergene_fasta;
 
 # perform the Monte Carlo simlation
 print STDERR "perform Monte Carlo simlation\n";
-system("perl $dir\/script_CGP3_MonteCarlo.pl $filename_strain_pairs $filename_SSP_each_segment $segmentLength 1000 $outputFileName $terminationStep $file_input_tree 2> /dev/null");
+#system("perl $dir\/script_CGP3_MonteCarlo.pl $filename_strain_pairs $filename_SSP_each_segment $segmentLength 1000 $outputFileName $terminationStep $file_input_tree 2> /dev/null");
+system("perl $dir\/script_CGP3_MonteCarlo.pl $filename_strain_pairs $filename_SSP_each_segment $segmentLength 1000 $outputFileName $terminationStep $file_input_tree");
