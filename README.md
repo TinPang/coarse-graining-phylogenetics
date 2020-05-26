@@ -37,6 +37,7 @@ In this example, we reconstruct the tree of 10 E. coli strains, which have 45 st
 **Documentation**
 
 For more details of this algorithm, please refer to its publication:
+
 Pang, T. Y. (2020). A coarse-graining, ultrametric approach to resolve the phylogeny of prokaryotic strains with frequent homologous recombination. BMC Evolutionary Biology, 20(1). https://doi.org/10.1186/s12862-020-01616-5
 
 
